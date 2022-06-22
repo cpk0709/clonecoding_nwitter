@@ -1,3 +1,8 @@
+import {
+  auth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'myFirebase';
 import { useState } from 'react';
 
 const Auth = () => {
@@ -14,12 +19,20 @@ const Auth = () => {
       setPassword(value);
     }
   };
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
-    if (newAccount) {
-      // create account
-    } else {
-      // log in
+    try {
+      let data;
+      if (newAccount) {
+        // create account
+        data = await createUserWithEmailAndPassword(auth, email, password);
+      } else {
+        // log in
+        data = await signInWithEmailAndPassword(auth, email, password);
+      }
+      console.log(data);
+    } catch (error) {
+      console.log(error);
     }
   };
   return (

@@ -1,9 +1,9 @@
 import Routers from 'components/Routers';
 import { useState } from 'react';
-import { authService } from 'myFirebase';
+import { auth } from 'myFirebase';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(authService.currentUser);
+  const [isLoggedIn, setIsLoggedIn] = useState(auth.currentUser);
   return (
     <>
       <Routers isLoggedIn={isLoggedIn} />
