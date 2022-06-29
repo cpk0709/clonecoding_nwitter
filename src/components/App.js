@@ -1,12 +1,25 @@
 import Routers from 'components/Routers';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { auth } from 'myFirebase';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(auth.currentUser);
+  const [init, setInit] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+      setInit(true);
+    });
+  }, []);
+
   return (
     <>
-      <Routers isLoggedIn={isLoggedIn} />
+      {init ? <Routers isLoggedIn={isLoggedIn} /> : 'Initializing...'}
       <footer>&copy; {new Date().getFullYear()} Nwitter</footer>
     </>
   );
