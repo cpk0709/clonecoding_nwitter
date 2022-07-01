@@ -5,7 +5,12 @@ const Home = () => {
   const onSubmit = (event) => {
     event.preventDefault();
   };
-  const onChange = (event) => {};
+  const onChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setNweet(value);
+  };
   return (
     <div>
       <form onSubmit={onSubmit}>
