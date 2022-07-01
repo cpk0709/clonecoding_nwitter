@@ -8,6 +8,7 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -33,3 +34,4 @@ export {
   signInWithPopup,
   signOut,
 };
+export const dbService = getFirestore();
