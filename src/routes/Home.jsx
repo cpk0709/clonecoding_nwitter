@@ -13,8 +13,15 @@ const Home = () => {
   const [nweet, setNweet] = useState('');
   const [nweets, setNweets] = useState([]);
   const getNweets = async () => {
-    const dbNweets = query(collection(dbService, 'nweets'));
-    console.log(dbNweets);
+    const q = query(collection(dbService, 'nweets'));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      const nweetObj = {
+        ...doc.data(),
+        id: doc.id,
+      };
+      console.log(nweetObj);
+    });
   };
   useEffect(() => {
     getNweets();
