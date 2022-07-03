@@ -20,12 +20,12 @@ const Home = () => {
         ...doc.data(),
         id: doc.id,
       };
-      console.log(nweetObj);
+      setNweets((prev) => [nweetObj, ...prev]);
     });
   };
   useEffect(() => {
     getNweets();
-  });
+  }, []);
   const onSubmit = async (event) => {
     event.preventDefault();
     await addDoc(collection(dbService, 'nweets'), {
@@ -41,18 +41,23 @@ const Home = () => {
     setNweet(value);
   };
   return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <input
-          value={nweet}
-          onChange={onChange}
-          type='text'
-          placeholder="What's on your mind?"
-          maxLength={120}
-        />
-        <input type='submit' value='Nweet' />
-      </form>
-    </div>
+    <>
+      <div>
+        <form onSubmit={onSubmit}>
+          <input
+            value={nweet}
+            onChange={onChange}
+            type='text'
+            placeholder="What's on your mind?"
+            maxLength={120}
+          />
+          <input type='submit' value='Nweet' />
+        </form>
+      </div>
+      {nweets.map((nweet, index) => {
+        return <div key={index}>{nweet.nweet}</div>;
+      })}
+    </>
   );
 };
 
