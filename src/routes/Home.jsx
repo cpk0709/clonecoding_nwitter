@@ -9,7 +9,7 @@ import {
 } from 'firebase/firestore';
 import { useEffect } from 'react';
 
-const Home = () => {
+const Home = ({ userObj }) => {
   const [nweet, setNweet] = useState('');
   const [nweets, setNweets] = useState([]);
 
@@ -17,6 +17,7 @@ const Home = () => {
     const q = query(collection(dbService, 'nweets'));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
+      console.log(doc.data());
       const nweetObj = {
         ...doc.data(),
         id: doc.id,
@@ -34,6 +35,7 @@ const Home = () => {
     await addDoc(collection(dbService, 'nweets'), {
       text: nweet,
       createdAt: serverTimestamp(),
+      creatorId: userObj.uid,
     });
     setNweet('');
   };
@@ -60,7 +62,7 @@ const Home = () => {
       {nweets.map((nweet, index) => {
         return (
           <div key={index}>
-            <h4>{nweet.nweet}</h4>
+            <h4>{nweet.text}</h4>
           </div>
         );
       })}
