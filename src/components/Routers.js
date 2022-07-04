@@ -2,7 +2,7 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { Auth, Home, Profile } from '../routes';
 import Navigation from 'components/Navigation';
 
-const Routers = ({ isLoggedIn }) => {
+const Routers = ({ isLoggedIn, userObj }) => {
   return (
     <Router>
       {isLoggedIn && <Navigation />}
@@ -10,7 +10,7 @@ const Routers = ({ isLoggedIn }) => {
         {isLoggedIn ? (
           <>
             <Route exact path='/'>
-              <Home />
+              <Home userObj={userObj} />
             </Route>
             <Route exact path='/profile'>
               <Profile />
