@@ -10,6 +10,7 @@ import {
   orderBy,
 } from 'firebase/firestore';
 import { useEffect } from 'react';
+import Nweet from 'components/Nweet';
 
 const Home = ({ userObj }) => {
   const [nweet, setNweet] = useState('');
@@ -70,11 +71,13 @@ const Home = ({ userObj }) => {
           <input type='submit' value='Nweet' />
         </form>
       </div>
-      {nweets.map((nweet, index) => {
+      {nweets.map((nweet) => {
         return (
-          <div key={index}>
-            <h4>{nweet.text}</h4>
-          </div>
+          <Nweet
+            key={nweet.id}
+            nweetObj={nweet}
+            isOwner={nweet.creatorId === userObj.uid}
+          />
         );
       })}
     </>
