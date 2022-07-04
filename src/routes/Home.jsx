@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 const Home = () => {
   const [nweet, setNweet] = useState('');
   const [nweets, setNweets] = useState([]);
+
   const getNweets = async () => {
     const q = query(collection(dbService, 'nweets'));
     const querySnapshot = await getDocs(q);
@@ -23,13 +24,15 @@ const Home = () => {
       setNweets((prev) => [nweetObj, ...prev]);
     });
   };
+
   useEffect(() => {
     getNweets();
   }, []);
+
   const onSubmit = async (event) => {
     event.preventDefault();
     await addDoc(collection(dbService, 'nweets'), {
-      nweet,
+      text: nweet,
       createdAt: serverTimestamp(),
     });
     setNweet('');
@@ -55,7 +58,11 @@ const Home = () => {
         </form>
       </div>
       {nweets.map((nweet, index) => {
-        return <div key={index}>{nweet.nweet}</div>;
+        return (
+          <div key={index}>
+            <h4>{nweet.nweet}</h4>
+          </div>
+        );
       })}
     </>
   );
