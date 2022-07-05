@@ -1,26 +1,28 @@
 {
-    "env":{
-        "browser": true,
-        "es2021":true,
-        "node": true
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    // 선언하고 안 쓰는 변수, 컴포넌트 있으면 에러
+    // "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "extends":[
-        // 선언하고 안 쓰는 변수, 컴포넌트 있으면 에러
-        // "eslint:recommended",
-        "plugin:react/recommended"
-    ],
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": "latest",
-        "sourceType": "module"
-    },
-    "plugins": ["react"],
-    "rules": {
-        "react/self-closing-comp":"error",
-        "react/react-in-jsx-scope":"off",
-        "react/prop-types":0,
-        "no-mixed-spaces-and-tabs":0
-    }
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react"],
+  "rules": {
+    "react/self-closing-comp": "error",
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": 0,
+    "no-mixed-spaces-and-tabs": 0
+    // confirm 사용 못하게해서..
+    // "no-restricted-globals": ["error", "event", "fdescribe"]
+  }
 }
