@@ -1,5 +1,5 @@
 import { dbService } from 'myFirebase';
-import { doc, deleteDoc } from 'firebase/firestore';
+import { doc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { useState } from 'react';
 
 const Nweet = ({ nweetObj, isOwner }) => {
@@ -13,8 +13,12 @@ const Nweet = ({ nweetObj, isOwner }) => {
     }
   };
   const toggleEditing = () => setEditing((prev) => !prev);
-  const onSubmit = (event) => {
+  // Edit
+  const onSubmit = async (event) => {
     event.preventDefault();
+    const NweetTextRef = doc(dbService, 'nweets', nweetObj.id);
+    await updateDoc(NweetTextRef, { text: newNweet });
+    setEditing(false);
   };
   const onChange = (event) => {
     const {
@@ -34,6 +38,7 @@ const Nweet = ({ nweetObj, isOwner }) => {
               onChange={onChange}
               required
             />
+            <input type='submit' value='update Nweet' />
           </form>
           <button onClick={toggleEditing}>Cancel</button>
         </>
