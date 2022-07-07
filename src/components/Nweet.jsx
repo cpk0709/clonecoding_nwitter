@@ -12,13 +12,40 @@ const Nweet = ({ nweetObj, isOwner }) => {
       await deleteDoc(NweetTextRef);
     }
   };
+  const toggleEditing = () => setEditing((prev) => !prev);
+  const onSubmit = (event) => {
+    event.preventDefault();
+  };
+  const onChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setNewNweet(value);
+  };
   return (
     <div>
-      <h4>{nweetObj.text}</h4>
-      {isOwner && (
+      {editing ? (
         <>
-          <button onClick={onDeleteClick}>Delete Nweet</button>
-          <button>Edit Nweet</button>
+          <form onSubmit={onSubmit}>
+            <input
+              type='text'
+              placeholder='Edit your nweet'
+              value={newNweet}
+              onChange={onChange}
+              required
+            />
+          </form>
+          <button onClick={toggleEditing}>Cancel</button>
+        </>
+      ) : (
+        <>
+          <h4>{nweetObj.text}</h4>
+          {isOwner && (
+            <>
+              <button onClick={onDeleteClick}>Delete Nweet</button>
+              <button onClick={toggleEditing}>Edit Nweet</button>
+            </>
+          )}
         </>
       )}
     </div>
