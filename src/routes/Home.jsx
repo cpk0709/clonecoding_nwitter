@@ -53,15 +53,16 @@ const Home = ({ userObj }) => {
       const attachmentRef = ref(storageService, `${userObj.uid}/${uuidv4()}`);
       await uploadString(attachmentRef, attachment, 'data_url');
       attachmentUrl = await getDownloadURL(ref(storageService, attachmentRef));
-      console.log(attachmentUrl);
+      const newNweet = {
+        text: nweet,
+        createAt: Date.now(),
+        creatorId: userObj.uid,
+        attachmentUrl,
+      };
+      await addDoc(collection(dbService, 'nweets'), newNweet);
+      setNweet('');
+      setAttachment('');
     }
-
-    // await addDoc(collection(dbService, 'nweets'), {
-    //   text: nweet,
-    //   createdAt: serverTimestamp(),
-    //   creatorId: userObj.uid,
-    // });
-    // setNweet('');
   };
   const onChange = (event) => {
     const {
