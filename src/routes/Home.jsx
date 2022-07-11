@@ -12,7 +12,7 @@ import {
 import { useEffect } from 'react';
 import Nweet from 'components/Nweet';
 import { storageService } from 'myFirebase';
-import { ref, uploadString } from 'firebase/storage';
+import { ref, uploadString, getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 
 const Home = ({ userObj }) => {
@@ -48,9 +48,14 @@ const Home = ({ userObj }) => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    const fileRef = ref(storageService, `${userObj.uid}/${uuidv4()}`);
-    const response = await uploadString(fileRef, attachment, 'data_url');
-    console.log(response);
+    let attachmentUrl = '';
+    if (attachment !== '') {
+      const attachmentRef = ref(storageService, `${userObj.uid}/${uuidv4()}`);
+      await uploadString(attachmentRef, attachment, 'data_url');
+      attachmentUrl = await getDownloadURL(ref(storageService, attachmentRef));
+      console.log(attachmentUrl);
+    }
+
     // await addDoc(collection(dbService, 'nweets'), {
     //   text: nweet,
     //   createdAt: serverTimestamp(),
