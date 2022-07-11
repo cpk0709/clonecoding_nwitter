@@ -16,8 +16,11 @@ import { ref, uploadString, getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 
 const Home = ({ userObj }) => {
+  // 트윗 input 태그 입력 글
   const [nweet, setNweet] = useState('');
+  // firestore에 저장된 트윗
   const [nweets, setNweets] = useState([]);
+  // 이미지 첨무(string)
   const [attachment, setAttachment] = useState();
 
   // const getNweets = async () => {
