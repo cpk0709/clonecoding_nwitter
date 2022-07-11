@@ -42,6 +42,7 @@ const Home = ({ userObj }) => {
         id: document.id,
         ...document.data(),
       }));
+
       setNweets(nweetArray);
     });
   }, []);
@@ -55,7 +56,7 @@ const Home = ({ userObj }) => {
       attachmentUrl = await getDownloadURL(ref(storageService, attachmentRef));
       const newNweet = {
         text: nweet,
-        createAt: Date.now(),
+        createdAt: serverTimestamp(),
         creatorId: userObj.uid,
         attachmentUrl,
       };
